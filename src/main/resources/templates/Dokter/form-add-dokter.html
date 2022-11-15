@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah User</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<!--<div th:if="${user.getRole().getRole() == 'Admin'}" class="container">-->
+    <div class="card m-5 p-5">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Tambah Dokter Baru</h2>
+                <br>
+                <form th:action="@{/dokter/add}" th:object="${dokter}" method="POST">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control"/>
+
+                    <label>Nama</label>
+                    <input type="text" name="nama" class="form-control"/>
+
+                    <label>E-mail</label>
+                    <input type="text" name="email" class="form-control"/>
+
+                    <label>Tarif</label>
+                    <input type="number" name="tarif" class="form-control"/>
+
+                    <label>Password</label>
+                    <input type="text" name="password" class="form-control" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" title="Password user mengandung angka, huruf besar, huruf kecil, dan simbol serta minimal memiliki 8 karakter"/>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a class="btn btn-link" href="/">Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div th:unless="${user.getRole().getRole() == 'Admin'}" class="container">-->
+<!--    <div class="card m-4 p-4">-->
+<!--        <div class="card-body">-->
+<!--            <div class="justify-content-center">-->
+<!--                <h2>Tidak dapat menambahkan user.</h2>-->
+<!--                <h2>Halaman ini khusus Admin</h2>-->
+<!--                <br>-->
+<!--                <a class="btn btn-primary" href="/">Kembali</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</body>
+</html>
