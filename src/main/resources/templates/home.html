@@ -9,7 +9,7 @@
 <body>
   <nav th:replace="fragments/fragment :: navbar"></nav>
   <div class="jumbotron text-center">
-    <h1 class="display-4">Hello, user!</h1>
+    <h1 th:text="'Hello ' + ${#httpServletRequest.remoteUser}+'!'">Login as</h1>
     <p class="lead">Welcome to RumahSehat</p>
   </div>
   <div class="container">
