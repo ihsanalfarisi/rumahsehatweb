@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ApotekerServiceImpl implements ApotekerService{
     @Autowired
@@ -23,5 +25,10 @@ public class ApotekerServiceImpl implements ApotekerService{
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
         return hashedPassword;
+    }
+
+    @Override
+    public List<ApotekerModel> getAllApoteker() {
+        return apotekerDb.findAll();
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DokterServiceImpl implements DokterService{
     @Autowired
@@ -16,6 +18,11 @@ public class DokterServiceImpl implements DokterService{
         String pass = encrypt(user.getPassword());
         user.setPassword(pass);
         return dokterDb.save(user);
+    }
+
+    @Override
+    public List<DokterModel> getAllDokter() {
+        return dokterDb.findAll();
     }
 
     @Override
