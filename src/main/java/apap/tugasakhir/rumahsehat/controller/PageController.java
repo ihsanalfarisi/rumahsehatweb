@@ -5,6 +5,7 @@ import apap.tugasakhir.rumahsehat.model.UserModel;
 import apap.tugasakhir.rumahsehat.security.xml.Attributes;
 import apap.tugasakhir.rumahsehat.security.xml.ServiceResponse;
 import apap.tugasakhir.rumahsehat.service.AdminService;
+import apap.tugasakhir.rumahsehat.service.UserService;
 import apap.tugasakhir.rumahsehat.setting.Setting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,13 +27,16 @@ import java.security.Principal;
 
 @Controller
 public class PageController {
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private AdminService adminService;
     private WebClient webClient = WebClient.builder().build();
 
     @RequestMapping("/")
-    public String home() {
+    public String home(Model model) {
+        String role = userService.getUserRole();
+        model.addAttribute("role", role);
         return "home";
     }
 

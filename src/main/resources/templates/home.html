@@ -2,59 +2,23 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>RumahSehat</title>
+  <title>- RumahSehat -</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-  <nav th:replace="fragments/fragment :: navbar"></nav>
+  <nav th:replace="fragments/fragment :: navbar('home')"></nav>
   <div class="jumbotron text-center">
     <h1 th:text="'Hello ' + ${#httpServletRequest.remoteUser}+'!'">Login as</h1>
     <p class="lead">Welcome to RumahSehat</p>
   </div>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="card mx-2">
-          <div class="card-body">
-            <h5 class="card-title">User</h5>
-            <p class="card-text">Kelola users.</p>
-            <a href="#" class="btn btn-primary">Users</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="card mx-2">
-          <div class="card-body">
-            <h5 class="card-title">Appointments</h5>
-            <p class="card-text">Kelola appointments.</p>
-            <a href="#" class="btn btn-primary">Appointments</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="card mx-2">
-          <div class="card-body">
-            <h5 class="card-title">Resep</h5>
-            <p class="card-text">Kelola resep.</p>
-            <a href="#" class="btn btn-primary">Resep</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="card mx-2">
-          <div class="card-body">
-            <h5 class="card-title">Obat</h5>
-            <p class="card-text">Kelola obat.</p>
-            <a href="#" class="btn btn-primary">Obat</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    </div>
-
+    <h4 class="text-center">Main Menu</h4>
+    <br>
+    <a th:if="${role == 'admin'}" href="/user" class="btn btn-success btn-lg btn-block">User</a>
+    <a th:if="${role == 'admin' || role == 'dokter'}" href="#" class="btn btn-success btn-lg btn-block">Appointments</a>
+    <a th:if="${role == 'admin' || role == 'apoteker'}" href="#" class="btn btn-success btn-lg btn-block">Resep</a>
+    <a th:if="${role == 'admin' || role == 'apoteker'}" href="#" class="btn btn-success btn-lg btn-block">Obat</a>
   </div>
-
 </body>
 </html>
