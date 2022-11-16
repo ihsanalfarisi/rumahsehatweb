@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>RumahSehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+  <div th:if="*{listAppointment.size() != 0}">
+    <br>
+    <h2>Daftar Appointment</h2>
+    <br><br>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>Kode</th>
+        <th th:if="*{role}=='pasien' or *{role}=='admin'">Nama Dokter</th>
+        <th>Nama Pasien</th>
+        <th>Waktu Awal</th>
+        <th>Status</th>
+        <th>Detail Appointment</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="appointment, iterationStatus : ${listAppointment}">
+        <td th:text="${iterationStatus.count}"></td>
+        <td th:text="${appointment.kode}"></td>
+        <td th:if="*{role}=='pasien' or *{role}=='admin'" th:text="${appointment.dokter.nama}"></td>
+        <td th:text="${appointment.pasien.nama}"></td>
+        <td th:text="${#temporals.format(appointment.waktuAwal, 'dd-MM-yyyy HH:mm')}"></td>
+        <td th:if="${appointment.isDone} != true">Belum selesai</td>
+        <td th:unless="${appointment.isDone} != true">Sudah selesai</td>
+        <td> <a class="btn btn-info" th:href="@{/appointment/view/} + ${appointment.kode}">Detail</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:unless="*{listAppointment.size() != 0}">
+    <h2 th:text="'Belum ada Appointment'"></h2>
+  </div>
+</div>
+</body>
+
+</html>
