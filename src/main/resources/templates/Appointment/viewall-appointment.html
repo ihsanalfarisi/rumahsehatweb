@@ -9,15 +9,14 @@
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar"></nav>
+<nav th:replace="fragments/fragment :: navbar('appointment')"></nav>
 <div class="container">
   <div th:if="*{listAppointment.size() != 0}">
+    <h2 class="mt-5 text-center">Daftar Appointment</h2>
     <br>
-    <h2>Daftar Appointment</h2>
-    <br><br>
     <table class="table">
       <thead>
-      <tr>
+      <tr class="bg-secondary text-light font-weight-normal">
         <th>No</th>
         <th>Kode</th>
         <th th:if="*{role}=='pasien' or *{role}=='admin'">Nama Dokter</th>

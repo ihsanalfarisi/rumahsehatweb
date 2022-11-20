@@ -37,8 +37,6 @@ public class TagihanModel implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd' 'HH:mm")
     private LocalDateTime tanggalTerbuat;
 
-    @NotNull
-    @Column(nullable=false)
     @DateTimeFormat(pattern="yyyy-MM-dd' 'HH:mm")
     private LocalDateTime tanggalBayar;
 
@@ -51,7 +49,7 @@ public class TagihanModel implements Serializable {
     private Integer jumlahTagihan;
 
     @OneToOne
-    @JoinColumn(name = "uuid_pasien", referencedColumnName = "kode", nullable = false)
+    @JoinColumn(name = "appointment", referencedColumnName = "kode", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private AppointmentModel appointment;
 }
