@@ -39,7 +39,7 @@ public class ResepModel {
     private AppointmentModel appointment;
 
     @ManyToOne
-    @JoinColumn(name = "confirmer_uuid", referencedColumnName = "uuid", nullable = false)
+    @JoinColumn(name = "confirmer_uuid", referencedColumnName = "uuid")
     private ApotekerModel apoteker;
 
     @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

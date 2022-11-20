@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>RumahSehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('appointment')"></nav>
+<br>
+<div class="m-auto row justify-content-center text-danger font-weight-bold">
+  <div th:text="${message}"></div>
+</div>
+<div class="container">
+  <div class="justify-content-center">
+    <h2 th:text="'Detail Appointment '+ ${appointment.kode}"></h2>
+    <br>
+    <p th:text="'Waktu Awal : ' + ${#temporals.format(appointment.waktuAwal, 'dd-MM-yyyy HH:mm')}"></p>
+    <p th:if="${appointment.isDone} != true">Status : Belum selesai</p>
+    <p th:unless="${appointment.isDone} != true">Status : Sudah selesai</p>
+    <p th:text="'Nama Dokter : ' + ${appointment.dokter.nama}"></p>
+    <p th:text="'Nama Pasien : ' + ${appointment.pasien.nama}"></p>
+    <br>
+    <a class="btn btn-primary" th:if="${appointment.resep == null} and ${role == 'dokter'}" th:href="@{/resep/add/} + ${appointment.kode}">Create Resep</a>
+    <a class="btn btn-primary" th:if="${appointment.resep != null}" th:href="@{/resep/view/} + ${appointment.resep.id}">Lihat Resep</a>
+    <a class="btn btn-secondary" href="/appointment/viewall">Kembali</a>
+    <br>
+    <br>
+    <div th:if="${appointment.isDone} != true">
+      <a
+              th:if="${appointment.resep == null} and ${role == 'dokter'}"
+              th:href="@{/appointment/update/} + ${appointment.kode}"
+              class="btn btn-danger"
+              th:data-confirm-delete="|Apakah anda yakin ingin menyelesaikan appointment tanpa resep?|"
+              onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false"
+      >
+        Selesai
+      </a>
+      <a
+              th:if="${appointment.resep != null} and ${role == 'dokter'}"
+              th:href="@{/appointment/update/} + ${appointment.kode}"
+              class="btn btn-danger"
+      >
+        Selesai
+      </a>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
