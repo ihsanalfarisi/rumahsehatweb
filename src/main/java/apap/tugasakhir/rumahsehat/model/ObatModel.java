@@ -28,11 +28,11 @@ public class ObatModel {
 
     @NotNull
     @Column(name = "stok", nullable = false)
-    private Integer stok;
+    private Integer stok = 100;
 
     @NotNull
-    @Column(name = "kuantitas", nullable = false)
-    private Integer kuantitas = 100;
+    @Column(name = "harga", nullable = false)
+    private Integer harga;
 
     @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<JumlahObatResepModel> listJumlahObatResep;
