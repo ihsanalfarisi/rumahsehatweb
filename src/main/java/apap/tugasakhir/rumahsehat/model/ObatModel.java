@@ -18,17 +18,16 @@ import java.util.List;
 @Table(name = "obat")
 public class ObatModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_obat")
-    private Long idObat;
+    private String idObat;
 
     @NotNull
     @Column(name = "nama_obat", nullable = false)
     private String namaObat;
 
     @NotNull
-    @Column(name = "stok", nullable = false)
-    private Integer stok = 100;
+    @Column(name = "stok", nullable = false, columnDefinition = "integer default 100")
+    private Integer stok;
 
     @NotNull
     @Column(name = "harga", nullable = false)
