@@ -4,6 +4,7 @@ import apap.tugasakhir.rumahsehat.model.UserModel;
 import apap.tugasakhir.rumahsehat.repository.AdminDb;
 import apap.tugasakhir.rumahsehat.repository.ApotekerDb;
 import apap.tugasakhir.rumahsehat.repository.DokterDb;
+import apap.tugasakhir.rumahsehat.repository.PasienDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +28,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private AdminDb adminDb;
 
+    @Autowired
+    private PasienDb pasienDb;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserModel user = dokterDb.findByUsername(username);
@@ -34,6 +38,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             user = apotekerDb.findByUsername(username);
             if (user == null) {
                 user = adminDb.findByUsername(username);
+                if (user == null) {
+                    user = pasienDb.findByUsername(username);
+                }
             }
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
