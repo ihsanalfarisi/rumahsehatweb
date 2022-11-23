@@ -74,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/css/**").permitAll()
                     .antMatchers("/js/**").permitAll()
                     .antMatchers("/").hasAnyAuthority("admin", "dokter", "apoteker")
-                    .antMatchers("/login-sso", "/validate-ticket").hasAnyAuthority("admin", "dokter", "apoteker")
+                    .antMatchers("/login-sso", "/validate-ticket").permitAll()
                     .antMatchers("/appointment").hasAnyAuthority("dokter", "admin")
                     .antMatchers("/appointment/*").hasAnyAuthority("dokter", "admin")
                     .antMatchers("/resep/add").hasAuthority("dokter")
@@ -98,7 +98,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         }
 
     }
-
-
-
 }
