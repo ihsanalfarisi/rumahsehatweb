@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <title>RumahSehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('obat')"></nav>
+<div class="container">
+  <h2 class="mt-5 text-center">Daftar Obat</h2>
+  <br>
+  <div th:if="*{listObat.size() != 0}">
+    <table class="table table-bordered table-hover">
+      <thead class="table-success">
+      <tr>
+        <th>Id</th>
+        <th>Nama</th>
+        <th>Stok</th>
+        <th>Harga</th>
+        <th>Ubah Stok</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="obat, iterationStatus:${listObat}">
+        <td th:text="${obat.idObat}"></td>
+        <td th:text="${obat.namaObat}"></td>
+        <td th:text="${obat.stok}"></td>
+        <td th:text="${obat.harga}"></td>
+        <td>
+          <a class="btn btn-success" th:if="${role == 'apoteker'}"  th:href="@{/obat/update/} + ${obat.idObat}">Update</a>
+          <a class="btn btn-success" th:if="${role == 'admin'}"  th:href="@{/obat/update/denied}">Update</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:unless="*{listObat.size() != 0}">
+    <h2 th:text="'Belum Ada Obat'"></h2>
+  </div>
+</div>
+</body>
+</html>
