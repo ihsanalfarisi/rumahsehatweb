@@ -18,7 +18,7 @@
     <a th:if="${role == 'admin'}" href="/user" class="btn btn-success btn-lg btn-block">User</a>
     <a th:if="${role == 'admin' || role == 'dokter'}" href="#" class="btn btn-success btn-lg btn-block">Appointments</a>
     <a th:if="${role == 'admin' || role == 'apoteker'}" href="#" class="btn btn-success btn-lg btn-block">Resep</a>
-    <a th:if="${role == 'admin' || role == 'apoteker'}" href="#" class="btn btn-success btn-lg btn-block">Obat</a>
+    <a th:if="${role == 'admin' || role == 'apoteker'}" href="/obat" class="btn btn-success btn-lg btn-block">Obat</a>
   </div>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>RumahSehat</title>
+  <object th:include="fragments//fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments//fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar('obat')"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2 class="text-center">Form Ubah Stok Obat</h2>
+        <form th:action="@{/obat/update/} + ${obat.idObat}" th:object="${obat}" method="POST">
+
+          Id Obat <br>
+          <input type="hidden" th:field="*{idObat}" />
+          <input class="form-control" type="text" disabled="true" name="idObat" th:value="*{idObat}"/>
+          <br><br>
+
+          Nama Obat <br>
+          <input type="hidden" th:field="*{namaObat}" />
+          <input class="form-control" type="text" disabled="true" name="namaObat" th:value="*{namaObat}"/>
+          <br><br>
+
+          Stok <br>
+          <input class="form-control" type="text" name="stok" th:value="*{stok}"/>
+          <br><br>
+
+          Harga <br>
+          <input type="hidden" th:field="*{harga}" />
+          <input class="form-control" type="text" disabled="true" name="harga" th:value="*{harga}"/>
+          <br><br>
+
+          <button class="btn btn-success" type="submit">Simpan</button>
+          <a class="btn btn-outline-success" href="/obat">Kembali</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
