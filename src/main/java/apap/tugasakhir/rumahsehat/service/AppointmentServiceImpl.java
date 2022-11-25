@@ -36,8 +36,6 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    PasienDb pasienDb;
 
     @Override
     public void addAppointment(AppointmentModel appointment) {
@@ -56,14 +54,6 @@ public class AppointmentServiceImpl implements AppointmentService{
                 }
             }
             result = appointmentDokter;
-        } else if (user.getRole().equals("pasien")) {
-            List<AppointmentModel> appointmentPasien = new ArrayList<AppointmentModel>();
-            for (AppointmentModel appointment : result) {
-                if (appointment.getPasien().getUuid().equals(user.getUuid())) {
-                    appointmentPasien.add(appointment);
-                }
-            }
-            result = appointmentPasien;
         }
         return result;
     }
@@ -113,10 +103,6 @@ public class AppointmentServiceImpl implements AppointmentService{
             return adminDb.findByUsername(username);
         } else if (role.equals("dokter")) {
             return dokterDb.findByUsername(username);
-//        } else if (role.equals("pasien")) {
-//            return pasienDb.findByUsername(username);
-        } else if (role.equals("apoteker")) {
-            return apotekerDb.findByUsername(username);
         }
         return null;
     }
