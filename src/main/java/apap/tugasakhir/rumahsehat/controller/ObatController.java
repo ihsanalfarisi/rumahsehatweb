@@ -28,7 +28,7 @@ public class ObatController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("listObat", listObat);
-        return "obat/viewall-obat";
+        return "viewall-obat";
     }
 
     @GetMapping("/update/{idObat}")
