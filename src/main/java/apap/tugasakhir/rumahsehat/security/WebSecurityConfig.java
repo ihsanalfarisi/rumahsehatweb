@@ -21,14 +21,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
-    @Bean
-    public PasswordEncoder encoder()  {
-        return new BCryptPasswordEncoder();
-    }
 
+    public BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
     }
 
     @Bean

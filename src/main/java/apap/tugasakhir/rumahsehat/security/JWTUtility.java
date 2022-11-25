@@ -17,8 +17,9 @@ import java.util.function.Function;
 public class JWTUtility implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
     private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
-    @Value("${jwt.secret}")
-    private String secretKey;
+//    @Value("${jwt.secret}")
+//    private String secretKey;
+    private String secretKey = "tk";
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
