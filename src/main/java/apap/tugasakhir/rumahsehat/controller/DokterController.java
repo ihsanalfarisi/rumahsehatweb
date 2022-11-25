@@ -28,7 +28,7 @@ public class DokterController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("dokter", dokter);
-        return "dokter/form-add-dokter";
+        return "form-add-dokter";
     }
 
     @PostMapping(value = "/add")
@@ -45,6 +45,6 @@ public class DokterController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("listDokter", listDokter);
-        return "dokter/view-all-dokter";
+        return "view-all-dokter";
     }
 }

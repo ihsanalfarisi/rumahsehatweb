@@ -37,13 +37,13 @@ public class ObatController {
 
         if (obat == null){
             model.addAttribute("idObat", idObat);
-            return "obat/error-not-found";
+            return "error-not-found";
         }
 
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("obat", obat);
-        return "obat/form-update-obat";
+        return "form-update-obat";
     }
 
     @PostMapping("/update/{idObat}")
@@ -52,13 +52,13 @@ public class ObatController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("idObat", idObat);
-        return "obat/update-obat";
+        return "update-obat";
     }
 
     @GetMapping("/update/denied")
     public String updateDenied(Model model){
         String role = userService.getUserRole();
         model.addAttribute("role", role);
-        return "obat/update-denied";
+        return "update-denied";
     }
 }

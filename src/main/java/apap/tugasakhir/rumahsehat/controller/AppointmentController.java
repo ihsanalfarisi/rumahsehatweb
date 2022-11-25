@@ -36,7 +36,7 @@ public class AppointmentController {
         List<AppointmentModel> listAppointment = appointmentService.getListAppointment(user);
         model.addAttribute("listAppointment", listAppointment);
         model.addAttribute("role", role);
-        return "appointment/viewall-appointment";
+        return "viewall-appointment";
     }
 
     @GetMapping(value = "/view/{kode}")
@@ -45,7 +45,7 @@ public class AppointmentController {
         String role = userService.getUserRole();
         model.addAttribute("appointment", appointment);
         model.addAttribute("role", role);
-        return "appointment/view-appointment";
+        return "view-appointment";
     }
 
     @GetMapping(value = "/update/{kode}")

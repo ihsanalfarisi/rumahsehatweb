@@ -26,6 +26,6 @@ public class PasienController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("listPasien", listPasien);
-        return "pasien/view-all-pasien";
+        return "view-all-pasien";
     }
 }

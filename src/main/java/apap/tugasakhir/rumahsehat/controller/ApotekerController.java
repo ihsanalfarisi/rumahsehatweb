@@ -29,7 +29,7 @@ public class ApotekerController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("apoteker", apoteker);
-        return "apoteker/form-add-apoteker";
+        return "form-add-apoteker";
     }
 
     @PostMapping(value = "/add")
@@ -46,6 +46,6 @@ public class ApotekerController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("listApoteker", listApoteker);
-        return "apoteker/view-all-apoteker";
+        return "view-all-apoteker";
     }
 }

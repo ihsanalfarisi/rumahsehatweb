@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Dokter - RumahSehat -</title>
+  <title>Pasien - RumahSehat -</title>
   <object th:include="fragments/fragment :: css" th:remove="tag"></object>
   <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
@@ -10,9 +10,9 @@
 <nav th:replace="fragments/fragment :: navbar('user')"></nav>
 
 <div class="container">
-  <h2 class="mt-5 text-center">Semua Dokter</h2>
+  <h2 class="mt-5 text-center">Semua Pasien</h2>
   <br>
-  <div th:if="*{listDokter.size() != 0}">
+  <div th:if="*{listPasien.size() != 0}">
     <table class="table">
       <thead>
       <tr class="bg-secondary text-light font-weight-normal">
@@ -20,25 +20,25 @@
         <th>Nama</th>
         <th>Username</th>
         <th>Email</th>
-        <th>Tarif</th>
+        <th>Umur</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="dokter, iterationStatus : ${listDokter}">
+      <tr th:each="pasien, iterationStatus : ${listPasien}">
         <td th:text="${iterationStatus.count}"></td>
-        <td th:text="${dokter.getNama()}"></td>
-        <td th:text="${dokter.getUsername()}"></td>
-        <td th:text="${dokter.getEmail()}"></td>
-        <td th:text="${dokter.getTarif()}"></td>
+        <td th:text="${pasien.getNama()}"></td>
+        <td th:text="${pasien.getUsername()}"></td>
+        <td th:text="${pasien.getEmail()}"></td>
+        <td th:text="${pasien.getUmur()}"></td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div th:unless="*{listDokter.size() != 0}">
-    <h4 class="text-danger">Tidak ada dokter</h4>
+  <div th:unless="*{listPasien.size() != 0}">
+    <h4 class="text-danger">Tidak ada Pasien</h4>
   </div>
-  <a href="/dokter/add" class="btn btn-outline-primary mt-3">+Tambah Dokter</a>
-  <a href="/" class="btn btn-success mt-3">Home</a>
+  <a href="/static" class="btn btn-success mt-3">Home</a>
+
 </div>
 </body>
 </html>
