@@ -50,7 +50,7 @@ public class ResepController {
         app.setResep(resep);
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
-        return "/Resep/form-add-resep";
+        return "/form-add-resep";
     }
 
     @PostMapping(value = "/add/{kode}", params = { "save" })
@@ -66,7 +66,7 @@ public class ResepController {
         resep.setAppointment(app);
         resepService.addResep(resep);
         model.addAttribute("resep", resep);
-        return "/Resep/form-add-resep";
+        return "/form-add-resep";
     }
 
     @PostMapping(value = "/add", params = { "addRowObat" })
@@ -78,7 +78,7 @@ public class ResepController {
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
-        return "/Resep/form-add-resep";
+        return "/form-add-resep";
     }
 
     @PostMapping(value = "/add", params = { "deleteRowObat" })
@@ -92,7 +92,7 @@ public class ResepController {
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
-        return "/Resep/form-add-resep";
+        return "/form-add-resep";
     }
 
     @GetMapping("/view/{id}")
@@ -102,7 +102,7 @@ public class ResepController {
         model.addAttribute("resep", resep);
         model.addAttribute("listJumlah", resep.getListJumlahObatResep());
         model.addAttribute("role", role);
-        return "/Resep/view-resep";
+        return "/view-resep";
     }
 
     @GetMapping("")
@@ -111,7 +111,7 @@ public class ResepController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("listResep", listResep);
-        return "/Resep/viewall-resep";
+        return "/viewall-resep";
     }
 
 }
