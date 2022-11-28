@@ -19,7 +19,7 @@ public class JWTUtility implements Serializable {
     private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 //    @Value("${jwt.secret}")
 //    private String secretKey;
-    private String secretKey = "tk";
+    private String secretKey = "tkkelompok72";
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
