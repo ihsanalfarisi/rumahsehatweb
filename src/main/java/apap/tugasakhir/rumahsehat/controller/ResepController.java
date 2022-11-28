@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import apap.tugasakhir.rumahsehat.model.ApotekerModel;
 import apap.tugasakhir.rumahsehat.model.AppointmentModel;
 import apap.tugasakhir.rumahsehat.model.JumlahObatResepModel;
 import apap.tugasakhir.rumahsehat.model.ObatModel;
 import apap.tugasakhir.rumahsehat.model.ResepModel;
+import apap.tugasakhir.rumahsehat.service.ApotekerService;
 import apap.tugasakhir.rumahsehat.service.AppointmentService;
 import apap.tugasakhir.rumahsehat.service.ObatService;
 import apap.tugasakhir.rumahsehat.service.ResepService;
@@ -36,6 +38,9 @@ public class ResepController {
 
     @Autowired
     private ObatService obatService;
+
+    @Autowired
+    private ApotekerService apotekerService;
 
     @Autowired
     private UserService userService;
@@ -63,14 +68,22 @@ public class ResepController {
         }
         resep.setCreatedAt(LocalDateTime.now());
         AppointmentModel app = appointmentService.getAppointmentById(kode);
+        resep.setIsDone(false);
         resep.setAppointment(app);
         resepService.addResep(resep);
+
+        List<ResepModel> listResep = resepService.getListResep();
+        String role = userService.getUserRole();
+        model.addAttribute("role", role);
+        model.addAttribute("listResep", listResep);
+        
         model.addAttribute("resep", resep);
-        return "/form-add-resep";
+        model.addAttribute("kode", app.getKode());
+        return "viewall-resep";
     }
 
-    @PostMapping(value = "/add", params = { "addRowObat" })
-    private String addRowObat(@ModelAttribute ResepModel resep, BindingResult bindingResult, Model model) {
+    @PostMapping(value = "/add/{kode}", params = { "addRowObat" })
+    private String addRowObat(@PathVariable String kode,@ModelAttribute ResepModel resep, BindingResult bindingResult, Model model) {
         if (resep.getListJumlahObatResep() == null || resep.getListJumlahObatResep().size() == 0) {
             resep.setListJumlahObatResep(new ArrayList<>());
         }
@@ -78,11 +91,12 @@ public class ResepController {
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
+        model.addAttribute("kode", kode);
         return "/form-add-resep";
     }
 
-    @PostMapping(value = "/add", params = { "deleteRowObat" })
-    private String deleteRowObat(@ModelAttribute ResepModel resep,
+    @PostMapping(value = "/add/{kode}", params = { "deleteRowObat" })
+    private String deleteRowObat(@PathVariable String kode,@ModelAttribute ResepModel resep,
             @RequestParam("deleteRowObat") Integer row, Model model) {
         if (resep.getListJumlahObatResep() == null || resep.getListJumlahObatResep().size() == 0) {
             resep.setListJumlahObatResep(new ArrayList<>());
@@ -91,6 +105,7 @@ public class ResepController {
         resep.getListJumlahObatResep().remove(rowId.intValue());
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
+        model.addAttribute("kode", kode);
         model.addAttribute("listObat", listObat);
         return "/form-add-resep";
     }
@@ -105,13 +120,30 @@ public class ResepController {
         return "/view-resep";
     }
 
-    @GetMapping("")
+    @GetMapping("/viewall")
     public String viewAllResep(Model model) {
         List<ResepModel> listResep = resepService.getListResep();
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("listResep", listResep);
         return "/viewall-resep";
+    }
+
+    @PostMapping(value="/view/{id}", params= {"konfirmasi"})
+    public String confirmResep(@PathVariable Long id, Model model, Principal principal) {
+        ResepModel resep = resepService.getResepById(id);
+        resep.setIsDone(true);
+        String role = userService.getUserRole();
+        String namaApoteker = principal.getName();
+        ApotekerModel apoteker = apotekerService.getApotekerByUsername(namaApoteker);
+        resep.setApoteker(apoteker);
+
+        resepService.addResep(resep);
+
+        model.addAttribute("resep", resep);
+        model.addAttribute("listJumlah", resep.getListJumlahObatResep());
+        model.addAttribute("role", role);
+        return "view-resep";
     }
 
 }

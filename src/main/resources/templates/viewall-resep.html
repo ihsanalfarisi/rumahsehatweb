@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <nav th:replace="fragments/fragment :: navbar('user')"></nav>
+  <nav th:replace="fragments/fragment :: navbar('resep')"></nav>
   <div class="card m-5 p-5">
     <div class="card-body">
       <div class="justify-content-center">
@@ -29,14 +29,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr th:each="resep, iterationStatus : ${listResep}"
-                th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+              <tr th:each="resep, iterationStatus : ${listResep}">
                 <td th:text="${iterationStatus.count}"></td>
                 <td th:text="${resep.id}"></td>
                 <td th:text="${#temporals.format(resep.createdAt, 'dd MMMM yyyy HH:mm')}"></td>
-                <td th:text="${resep.isDone}"></td>
                 <td>
-                  <a class="btn btn-primary" th:href="@{/resep/view/} + ${resep.id}">Detail Resep</a>
+                  <p th:if="*{resep.isDone}">Selesai</p>
+                  <p th:unless="*{resep.isDone}">Belum Selesai</p>
+                </td>
+                <td>
+                <a class="btn btn-primary" th:href="@{/resep/view/} + ${resep.id}">Detail Resep</a>
                 </td>
               </tr>
             </tbody>

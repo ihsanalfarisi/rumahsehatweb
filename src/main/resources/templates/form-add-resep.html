@@ -9,12 +9,12 @@
 </head>
 
 <body>
-    <nav th:replace="fragments/fragment :: navbar('user')"></nav>
+    <nav th:replace="fragments/fragment :: navbar('resep')"></nav>
     <div class="card m-5 p-5">
         <div class="card-body">
             <div class="justify-content-center">
                 <h2>Tambah Resep</h2>
-                <form th:action="@{/resep/add}" th:object="${resep}" method="POST">
+                <form th:action="@{/resep/add/} + ${kode}" th:object="${resep}" method="POST">
 
 
                     <table class="table">
