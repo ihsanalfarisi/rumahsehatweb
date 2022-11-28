@@ -25,4 +25,13 @@ public class PasienServiceImpl implements PasienService {
         pasien.setPassword(hashedPass);
         return pasienDb.save(pasien);
     }
+
+    @Override
+    public PasienModel getPasienByUsername(String username) {
+        return pasienDb.findByUsername(username);
+    }
+    @Override
+    public PasienModel getPasienByEmail(String email) {
+        return pasienDb.findByEmail(email);
+    }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface PasienService {
     public List<PasienModel> getAllPasien();
     public PasienModel addPasien(PasienModel pasien);
+    public PasienModel getPasienByUsername(String username);
+    public PasienModel getPasienByEmail(String email);
 }

@@ -13,9 +13,9 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
@@ -40,11 +40,21 @@ public class JWTAuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> saveUser(@RequestBody PasienModel pasienBaru) throws Exception {
+    public ResponseEntity<?> register(@RequestBody PasienModel pasienBaru) throws Exception {
         pasienBaru.setRole("pasien");
         pasienBaru.setSaldo(0);
         pasienBaru.setAppointment(new ArrayList<>());
-        return ResponseEntity.ok(pasienService.addPasien(pasienBaru));
+        String username = pasienBaru.getUsername();
+        String email = pasienBaru.getEmail();
+        PasienModel pasienUsername = pasienService.getPasienByUsername(username);
+        PasienModel pasienEmail = pasienService.getPasienByEmail(email);
+        if (pasienUsername != null || pasienEmail != null) {
+            return ResponseEntity.badRequest().body("Username or email already registered.");
+        }
+        pasienService.addPasien(pasienBaru);
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(pasienBaru.getUsername());
+        final String token = jwtUtility.generateToken(userDetails);
+        return ResponseEntity.ok(new JWTResponse(token));
     }
     private void authenticate(String username, String password) throws Exception {
         try {
