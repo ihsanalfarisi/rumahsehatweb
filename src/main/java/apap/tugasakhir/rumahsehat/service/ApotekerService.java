@@ -9,4 +9,5 @@ public interface ApotekerService {
     public ApotekerModel addApoteker(ApotekerModel apoteker);
     public List<ApotekerModel> getAllApoteker();
     public String encrypt(String password);
+    public ApotekerModel getApotekerByUsername(String nama);
 }

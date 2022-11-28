@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <nav th:replace="fragments/fragment :: navbar('user')"></nav>
+    <nav th:replace="fragments/fragment :: navbar('resep')"></nav>
     <div class="card m-5 p-5">
         <div class="card-body">
             <div class="justify-content-center">
@@ -18,9 +18,13 @@
                     <p th:text="'ID Resep: ' + ${resep.id}"></p>
                     <p th:text="'Nama Dokter: ' + ${resep.appointment.dokter.nama}"></p>
                     <p th:text="'Nama Pasien: ' + ${resep.appointment.pasien.nama}"></p>
-                    <p th:if="*{isDone}">Status Resep: Selesai</p>
-                    <p th:unless="*{isDone}">Status Resep: Belum Selesai</p>
-                    <p th:if="*{confirmerUUID}" th:text="'Apoteker: ' + *{confirmerUUID.nama}"></p>
+                    <div th:if="*{resep.isDone}">
+                        <p>Status Resep: Selesai</p>
+                        <p th:text="'Apoteker: ' + *{resep.apoteker.nama}"></p>
+                    </div>
+                    <div th:unless="*{resep.isDone}">
+                        <p>Status Resep: Belum Selesai</p>
+                    </div>
 
                     <div th:if="*{listJumlah.size() != 0}">
                         <p th:text="'Jumlah Obat: ' + ${listJumlah.size}"></p>
@@ -34,18 +38,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="jumlahObat, iterationStatus : *{listJumlah}"
-                                    th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                                <tr th:each="jumlahObat, iterationStatus : *{listJumlah}">
                                     <td th:text="${iterationStatus.count}"></td>
-                                    <td th:text="${jumlah.obat.namaObat}"></td>
-                                    <td th:text="${jumlah.kuantitas}"></td>
+                                    <td th:text="${jumlahObat.obat.namaObat}"></td>
+                                    <td th:text="${jumlahObat.kuantitas}"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <form th:if="${!resep.isDone} and ${role == 'apoteker'}" method="post" th:object="${resep}"
-                        th:action="@{/resep/confirm/} + ${resep.id}">
-                        <button class="btn btn-primary" type="submit">Konfirmasi</button>
+                        th:action="@{/resep/view/} + ${resep.id}">
+                        <button class="btn btn-primary" type="submit" name="konfirmasi">Konfirmasi</button>
                     </form>
                     <div th:unless="*{listJumlah.size() != 0}">
                         <h2 th:text="'Tidak ada Obat'"></h2>

@@ -31,4 +31,9 @@ public class ApotekerServiceImpl implements ApotekerService{
     public List<ApotekerModel> getAllApoteker() {
         return apotekerDb.findAll();
     }
+
+    @Override
+    public ApotekerModel getApotekerByUsername(String nama) {
+        return apotekerDb.findByUsername(nama);
+    }
 }
