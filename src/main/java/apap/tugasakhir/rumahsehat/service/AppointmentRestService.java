@@ -8,7 +8,7 @@ import java.util.List;
 public interface AppointmentRestService {
     AppointmentModel createAppointment(AppointmentModel appointment);
 
-    List<AppointmentModel> retrieveListAppointment();
+    List<AppointmentModel> retrieveListAppointment(String username);
 
     List<DokterModel> retrieveListDokter();
 

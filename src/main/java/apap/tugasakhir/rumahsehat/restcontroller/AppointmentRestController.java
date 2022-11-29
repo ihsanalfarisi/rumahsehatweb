@@ -1,9 +1,11 @@
 package apap.tugasakhir.rumahsehat.restcontroller;
 
 import apap.tugasakhir.rumahsehat.model.AppointmentModel;
+import apap.tugasakhir.rumahsehat.model.DokterModel;
 import apap.tugasakhir.rumahsehat.service.AppointmentRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,13 +32,23 @@ public class AppointmentRestController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping(value = "/list-dokter")
+    private List<DokterModel> retrieveListDokter(){
+        return appointmentRestService.retrieveListDokter();
+    }
+
     @GetMapping(value = "/list-appointment")
-    private List<AppointmentModel> retrieveListAppointment(){
-        return appointmentRestService.retrieveListAppointment();
+    private List<AppointmentModel> retrieveListAppointment(
+            Authentication authentication,
+            @RequestParam("username") String username){
+        return appointmentRestService.retrieveListAppointment(username);
     }
 
     @GetMapping(value = "/appointment/{kode}")
-    private AppointmentModel retrieveAppointment(@PathVariable("kode") String kode){
+    private AppointmentModel retrieveAppointment(
+            Authentication authentication,
+            @PathVariable("kode") String kode){
         try {
             return appointmentRestService.getAppointmentById(kode);
         } catch (NoSuchElementException e) {

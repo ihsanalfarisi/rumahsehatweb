@@ -41,5 +41,6 @@ public class DokterModel extends UserModel{
     private Integer tarif;
 
     @OneToMany(mappedBy = "dokter", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<AppointmentModel> appointment;
 }
