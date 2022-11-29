@@ -1,5 +1,6 @@
 package apap.tugasakhir.rumahsehat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,7 @@ public class UserModel implements Serializable {
     @NotNull
     @Lob
     @Column(name = "password", nullable = false)
+    @JsonIgnore
     private String password;
 
     @NotNull

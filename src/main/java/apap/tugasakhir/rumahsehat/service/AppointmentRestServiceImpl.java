@@ -30,8 +30,8 @@ public class AppointmentRestServiceImpl implements AppointmentRestService {
     }
 
     @Override
-    public List<AppointmentModel> retrieveListAppointment() {
-        return appointmentDb.findAll();
+    public List<AppointmentModel> retrieveListAppointment(String username) {
+        return appointmentDb.findAllByPasien(username);
     }
 
     @Override
