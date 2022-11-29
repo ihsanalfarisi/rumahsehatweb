@@ -1,5 +1,6 @@
 package apap.tugasakhir.rumahsehat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class ResepModel {
     @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "kode_appointment", referencedColumnName = "kode", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private AppointmentModel appointment;
 
     @ManyToOne
