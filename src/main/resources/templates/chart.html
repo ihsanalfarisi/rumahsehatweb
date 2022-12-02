@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>RumahSehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        .chartMenu {
+            width: 100vw;
+            height: 40px;
+            background: #1A1A1A;
+            color: rgba(255, 26, 104, 1);
+        }
+        .chartMenu p {
+            padding: 10px;
+            font-size: 20px;
+        }
+        .chartCard {
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chartBox {
+            width: 700px;
+            padding: 20px;
+            border-radius: 20px;
+            /*border: solid 3px rgba(255, 26, 104, 1);*/
+            background: white;
+        }
+    </style>
+
+</head>
+
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('home')">
+    <a class="navbar-brand font-weight-bold text-primary" href="#">RumahSehat</a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <a class="nav-item nav-link active text-secondary" th:href="@{/}">
+                Beranda <span class="sr-only"></span>
+            </a>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/course/view}" method="GET">
+            <input class="form-control mr-sm-2" type="search"
+                   name="code" placeholder="Code Course" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<div class="d-flex justify-content-center">
+    <div class="m-4">
+        <h2> Laporan Kuantitas Penjualan </h2>
+        <div class="d-flex justify-content-center">
+            <a th:href="@{/chart}" class="mx-2 btn btn-primary">Kembali</a>
+        </div>
+        <br/>
+    </div>
+</div>
+
+<div class="chartCard">
+    <div class="chartBox">
+        <canvas id="myChart"></canvas>
+        <button onclick="updateChart()">Update Now</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+    // var obat = [[${obat}]]
+    // console.log(obat)
+
+    //Fetch
+    function updateChart(){
+        async function fetchdata(){
+            const url = "http://localhost:8080/api/v1/obat/chart-kuantitas";
+            const response = await fetch(url);
+
+            const datapoints = await response.json();
+            console.log(datapoints);
+            return datapoints;
+        };
+
+        fetchdata().then(datapoints => {
+            console.log(datapoints[0].kuantitas)
+            // console.log(datapoints.length)
+
+            const arrayNama =[]
+            datapoints.forEach((datapoint) => {
+                console.log(datapoint.obat.namaObat);
+                arrayNama.push(datapoint.obat.namaObat);
+            })
+
+            const arrayKuantitas =[]
+            datapoints.forEach((datapoint) => {
+                console.log(datapoint.kuantitas);
+                arrayKuantitas.push(datapoint.kuantitas);
+            })
+            console.log(arrayNama);
+            console.log(arrayKuantitas)
+
+            myChart.config.data.labels = arrayNama;
+            myChart.config.data.datasets[0].data = arrayKuantitas;
+            myChart.update();
+        });
+    }
+
+    // setup
+    const data = {
+        // labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: ['Alum Hydrox_Cap 475mg', 'Alu-Cap_Cap 475mg', 'Co-Simalcite_Susp 125mg/500mg/5ml S/F', 'Simeticone_Cap 100mg', 'Simeticone_Cap 400mg', 'Sod Bicarb_(S)', 'Gastrocote_Tab'],
+        datasets: [{
+            label: 'Total Kuantitas Penjualan',
+            data: [18, 12, 6, 9, 12, 3, 9],
+            backgroundColor: [
+                'rgba(255, 26, 104, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 26, 104, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 1)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    // config
+    const config = {
+        type: 'bar',
+        data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // render init block
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+</body>
+</html>
