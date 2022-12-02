@@ -14,4 +14,6 @@ public interface AppointmentDb extends JpaRepository<AppointmentModel, String> {
     @Query("SELECT a FROM AppointmentModel a WHERE a.pasien.username = :username")
     List<AppointmentModel> findAllByPasien(@Param("username") String username);
 
+    @Query("SELECT a FROM AppointmentModel a WHERE a.pasien.uuid = :idPasien or a.dokter.uuid = :idDokter")
+    List<AppointmentModel> findAllByPasienOrDokter(@Param("idDokter") String idDokter, @Param("idPasien") String idPasien);
 }

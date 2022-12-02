@@ -2,6 +2,7 @@ package apap.tugasakhir.rumahsehat.restcontroller;
 
 import apap.tugasakhir.rumahsehat.model.AppointmentModel;
 import apap.tugasakhir.rumahsehat.model.DokterModel;
+import apap.tugasakhir.rumahsehat.model.PasienModel;
 import apap.tugasakhir.rumahsehat.service.AppointmentRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -22,13 +25,28 @@ public class AppointmentRestController {
     private  AppointmentRestService appointmentRestService;
 
     @PostMapping(value = "/add")
-    private AppointmentModel createAppointment(@Valid @RequestBody AppointmentModel appointment, BindingResult bindingResult) {
+    private AppointmentModel createAppointment(@Valid @RequestBody Map<String,String> data, BindingResult bindingResult) {
         if(bindingResult.hasFieldErrors()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
             );
         } else {
-            return appointmentRestService.createAppointment(appointment);
+            AppointmentModel appointment = new AppointmentModel();
+            System.out.println(data.get("idDokter"));
+            DokterModel dokter = appointmentRestService.getDokter(data.get("idDokter"));
+            PasienModel pasien = appointmentRestService.getPasien(data.get("usernamePasien"));
+            appointment.setDokter(dokter);
+            appointment.setPasien(pasien);
+            appointment.setWaktuAwal(LocalDateTime.parse(data.get("waktuAwal")));
+            appointment.setIsDone(false);
+            if(appointmentRestService.checkAvailability(appointment)) {
+                return appointmentRestService.createAppointment(appointment);
+            } else {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
         }
     }
 
