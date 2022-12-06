@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah User</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('resep')"></nav>
+<div class="m-auto row justify-content-center text-danger font-weight-bold">
+    <div th:text="${message}"></div>
+</div>
+<div class="card m-5 p-5">
+    <div class="card-body">
+        <div class="justify-content-center">
+            <h2>Tambah Data Barchart</h2>
+            <form th:action="@{/barchart}" th:object="${resep}" method="POST">
+                <th>Jenis Chart</th>
+                <select class="form-control" name="tipe">
+                    <option th:value="penjualan">Kuantitas Penjualan</option>
+                    <option th:value="pendapatan">Total Pendapatan</option>
+                </select>
+                <table class="table">
+                    <th>Daftar Obat</th>
+                    <th>
+                        <button class="btn btn-primary" type="submit" name="addRowObat">Tambah
+                            Obat</button>
+                    </th>
+                    <tbody>
+                    <tr th:each="jumlahObatResep, iterationStatus : *{listJumlahObatResep}">
+                        <td>
+                            <select th:field="*{listJumlahObatResep[__${iterationStatus.index}__].obat}"
+                                    class="form-control">
+                                <div th:each="obatEx, iterationStatus2 : ${listObat}">
+                                    <option th:value="${obatEx.idObat}" th:text="${obatEx.namaObat}"></option>
+                                </div>
+                            </select>
+                        </td>
+                        <td>
+                            <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                                    name="deleteRowObat">Hapus</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <br>
+                <button type="submit" class="btn btn-primary" name="save">Submit</button>
+                <a class="btn btn-outline-primary" href="/">Home</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+
+</html>
+

@@ -45,5 +45,6 @@ public class ResepModel {
     private ApotekerModel apoteker;
 
     @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<JumlahObatResepModel> listJumlahObatResep;
 }
