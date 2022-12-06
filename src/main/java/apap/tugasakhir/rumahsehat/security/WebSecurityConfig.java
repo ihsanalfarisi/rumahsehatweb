@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/appointment").hasAnyAuthority("dokter", "admin")
                     .antMatchers("/appointment/*").hasAnyAuthority("dokter", "admin")
                     .antMatchers("/resep/add").hasAuthority("dokter")
-                    .antMatchers("/resep").hasAnyAuthority("admin", "apoteker")
+                    .antMatchers("/resep/viewall").hasAnyAuthority("admin", "apoteker")
                     .antMatchers("/resep/view").permitAll()
                     .antMatchers("/obat").hasAnyAuthority("admin", "apoteker")
                     .antMatchers("/obat/update").hasAuthority("apoteker")

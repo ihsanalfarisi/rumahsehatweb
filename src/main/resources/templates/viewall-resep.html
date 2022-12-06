@@ -14,11 +14,10 @@
     <div class="card-body">
       <div class="justify-content-center">
         <h2>Daftar Resep</h2>
-        <a class="btn btn-primary" href="/">Kembali</a>
         <br>
         <br>
         <div th:if="*{listResep.size() != 0}">
-          <table class="table">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th>No</th>
@@ -38,11 +37,12 @@
                   <p th:unless="*{resep.isDone}">Belum Selesai</p>
                 </td>
                 <td>
-                <a class="btn btn-primary" th:href="@{/resep/view/} + ${resep.id}">Detail Resep</a>
+                  <a class="btn btn-primary" th:href="@{/resep/view/} + ${resep.id}">Detail Resep</a>
                 </td>
               </tr>
             </tbody>
           </table>
+          <a class="btn btn-primary" href="/">Kembali</a>
         </div>
         <div th:unless="*{listResep.size() != 0}">
           <h2 th:text="'Tidak ada Resep'"></h2>

@@ -71,15 +71,10 @@ public class ResepController {
         resep.setIsDone(false);
         resep.setAppointment(app);
         resepService.addResep(resep);
-
-        List<ResepModel> listResep = resepService.getListResep();
+        String kodeApt = resep.getAppointment().getKode();
         String role = userService.getUserRole();
         model.addAttribute("role", role);
-        model.addAttribute("listResep", listResep);
-        
-        model.addAttribute("resep", resep);
-        model.addAttribute("kode", app.getKode());
-        return "viewall-resep";
+        return "redirect:/appointment/view/" + kodeApt;
     }
 
     @PostMapping(value = "/add/{kode}", params = { "addRowObat" })
@@ -132,14 +127,31 @@ public class ResepController {
     @PostMapping(value="/view/{id}", params= {"konfirmasi"})
     public String confirmResep(@PathVariable Long id, Model model, Principal principal) {
         ResepModel resep = resepService.getResepById(id);
+        List<JumlahObatResepModel> listJumlahObatResep = resep.getListJumlahObatResep();
+        for (JumlahObatResepModel jumlahObatResep : listJumlahObatResep) {
+            ObatModel obat = jumlahObatResep.getObat();
+            if (jumlahObatResep.getKuantitas() > obat.getStok()) {
+                String role = userService.getUserRole();
+                model.addAttribute("failmessage", "Stok obat tidak mencukupi kebutuhan resep.");
+                model.addAttribute("resep", resep);
+                model.addAttribute("listJumlah", resep.getListJumlahObatResep());
+                model.addAttribute("role", role);
+                return "view-resep";
+            }
+        }
         resep.setIsDone(true);
         String role = userService.getUserRole();
         String namaApoteker = principal.getName();
         ApotekerModel apoteker = apotekerService.getApotekerByUsername(namaApoteker);
         resep.setApoteker(apoteker);
-
         resepService.addResep(resep);
-
+        for (JumlahObatResepModel jumlahObatResep : listJumlahObatResep) {
+            ObatModel obat = jumlahObatResep.getObat();
+            obat.setStok(obat.getStok() - jumlahObatResep.getKuantitas());
+            obatService.updateObat(obat);
+        }
+        String kodeAppointment = resep.getAppointment().getKode();
+        model.addAttribute("successmessage", appointmentService.updateAppointment(kodeAppointment));
         model.addAttribute("resep", resep);
         model.addAttribute("listJumlah", resep.getListJumlahObatResep());
         model.addAttribute("role", role);
