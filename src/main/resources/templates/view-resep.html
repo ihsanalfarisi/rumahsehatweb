@@ -50,13 +50,17 @@
                         th:action="@{/resep/view/} + ${resep.id}">
                         <button class="btn btn-primary" type="submit" name="konfirmasi">Konfirmasi</button>
                     </form>
+                    <p th:if="${failmessage != null}" class="text-danger font-weight-normal" th:text="${failmessage}"></p>
+                    <p th:if="${successmessage != null}" class="text-success font-weight-normal" th:text="${successmessage}"></p>
                     <div th:unless="*{listJumlah.size() != 0}">
                         <h2 th:text="'Tidak ada Obat'"></h2>
                     </div>
                     <br>
 
-                    <a class="btn btn-primary" href="/resep/viewall">Kembali</a>
-                </div>
+                    <a th:if="${role == 'apoteker'}"class="btn btn-primary" href="/resep/viewall">Kembali</a>
+                    <a th:if="${role == 'dokter'}" class="btn btn-primary" th:href="@{/appointment/view/} + ${resep.getAppointment().getKode()}">Kembali</a>
+
+            </div>
             </div>
         </div>
     </div>
