@@ -2,17 +2,15 @@ package apap.tugasakhir.rumahsehat.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.transaction.TransactionScoped;
 import javax.transaction.Transactional;
 
+import apap.tugasakhir.rumahsehat.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import apap.tugasakhir.rumahsehat.model.AppointmentModel;
-import apap.tugasakhir.rumahsehat.model.JumlahObatResepModel;
-import apap.tugasakhir.rumahsehat.model.ResepModel;
-import apap.tugasakhir.rumahsehat.model.TagihanModel;
 import apap.tugasakhir.rumahsehat.repository.TagihanDb;
 
 @Service
@@ -48,9 +46,13 @@ public class TagihanServiceImpl implements TagihanService{
 
         return harga;
     }
-
+    @Override
     public TagihanModel getTagihanByAppointment(AppointmentModel appointment) {
         return tagihanDb.findTagihanByAppointment(appointment.getKode());
+    }
+    @Override
+    public List<TagihanModel> getListTagihanByIdObat(String idObat) {
+        return tagihanDb.findTagihanByObat(idObat);
     }
 
 }

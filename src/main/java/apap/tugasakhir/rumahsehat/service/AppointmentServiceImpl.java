@@ -86,12 +86,10 @@ public class AppointmentServiceImpl implements AppointmentService{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formatDateTime = now.format(formatter);
         LocalDateTime tanggalTerbuat = LocalDateTime.parse(formatDateTime, formatter);
-
         tagihan.setTanggalTerbuat(tanggalTerbuat);
         tagihan.setIsPaid(false);
         tagihan.setJumlahTagihan(appointment.getDokter().getTarif());
         tagihan.setAppointment(appointment);
-
         tagihanDb.save(tagihan);
     }
 

@@ -1,6 +1,7 @@
 package apap.tugasakhir.rumahsehat.service;
 
 import apap.tugasakhir.rumahsehat.model.JumlahObatResepModel;
+import apap.tugasakhir.rumahsehat.model.ObatModel;
 import apap.tugasakhir.rumahsehat.repository.JumlahDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,4 +57,5 @@ public class BarchartServiceImpl implements BarchartService {
         }
         return listNama;
     }
+
 }
