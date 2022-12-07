@@ -39,8 +39,8 @@ public class AppointmentRestServiceImpl implements AppointmentRestService {
     @Override
     public Boolean checkAvailability(AppointmentModel appointment) {
         boolean status = true;
-        List<AppointmentModel> listAppointment = appointmentDb.findAll();
-        List<AppointmentModel> listOther = new ArrayList<AppointmentModel>();
+        List<AppointmentModel> listAppointment = new ArrayList<AppointmentModel>();
+        List<AppointmentModel> listOther = appointmentDb.findAll();
         for (AppointmentModel apt : listAppointment) {
             if(apt.getPasien().getUuid().equals(appointment.getPasien().getUuid()) || apt.getDokter().getUuid().equals(appointment.getDokter().getUuid())){
                 listOther.add(apt);
