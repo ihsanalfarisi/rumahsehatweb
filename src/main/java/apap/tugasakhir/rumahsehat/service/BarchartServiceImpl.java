@@ -21,7 +21,7 @@ public class BarchartServiceImpl implements BarchartService {
             String nama = obat.getObat().getNamaObat();
             int total = 0;
             for (JumlahObatResepModel data : listJumlahObat) {
-                if (data.getObat().getNamaObat().equals(nama)) {
+                if (data.getObat().getNamaObat().equals(nama) && data.getResep().getIsDone()) {
                     total+=data.getKuantitas();
                 }
             }
@@ -38,7 +38,7 @@ public class BarchartServiceImpl implements BarchartService {
             String nama = obat.getObat().getNamaObat();
             int total = 0;
             for (JumlahObatResepModel data : listJumlahObat) {
-                if (data.getObat().getNamaObat().equals(nama)) {
+                if (data.getObat().getNamaObat().equals(nama) && data.getResep().getIsDone()) {
                     int harga = data.getKuantitas() * data.getObat().getHarga();
                     total+=harga;
                 }
