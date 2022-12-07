@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Obat Line Chart</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar('resep')"></nav>
+<div class="m-auto row justify-content-center text-danger font-weight-bold">
+  <div th:text="${message}"></div>
+</div>
+<div class="card m-5 p-5">
+  <div class="card-body">
+    <div class="justify-content-center">
+      <h2>Tambah Data Line Chart</h2>
+      <form th:action="@{/linechart}" th:object="${resep}" method="POST">
+        <th>Jenis Periode Line Chart</th>
+        <select class="form-control" name="tipe">
+          <option th:selected="${tipe == 'tahunan' || tipe == null}" th:value="tahunan">Laporan Tahunan</option>
+          <option th:selected="${tipe == 'bulanan'}" th:value="bulanan">Laporan Bulanan</option>
+        </select>
+        <div th:if="${tahun != null}" name="periode-selector">
+          <th>Tahun</th>
+          <input class="form-control" type="number" name="tahun" min="1900" th:max="${maxYear}" step="1" th:value="${tahun}" required/>
+        </div>
+        <div th:if="${bulan != null}" name="periode-selector">
+          <th>Bulan</th>
+          <input class="form-control" type="month" name="bulan" th:value="${bulan}" required/>
+        </div>
+        <table class="table">
+          <th>Daftar Obat</th>
+          <th>
+            <button class="btn btn-primary" type="submit" name="addRowObat">Tambah
+              Obat</button>
+          </th>
+          <tbody>
+          <tr th:each="jumlahObatResep, iterationStatus : *{listJumlahObatResep}">
+            <td>
+              <select th:field="*{listJumlahObatResep[__${iterationStatus.index}__].obat}"
+                      class="form-control">
+                <div th:each="obatEx, iterationStatus2 : ${listObat}">
+                  <option th:value="${obatEx.idObat}" th:text="${obatEx.namaObat}"></option>
+                </div>
+              </select>
+
+            </td>
+            <td>
+              <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                      name="deleteRowObat">Hapus</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <br>
+        <button type="submit" class="btn btn-primary" name="save">Submit</button>
+        <a class="btn btn-outline-primary" href="/">Home</a>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+  var tipeSelector = $("select[name='tipe']")
+  tipeSelector.change(function () {
+      $("div[name='periode-selector']").remove();
+      if (tipeSelector.find(":selected").val() == "tahunan") {
+          tipeSelector.after(
+              "<div name=\"periode-selector\">" +
+              "<th>Tahun</th>" +
+              "<input class=\"form-control\" type=\"number\" name=\"tahun\" min=\"1900\" th:max=\"${maxYear}\" step=\"1\" th:value=\"${maxYear}\" required/></div>"
+          );
+      } else if (tipeSelector.find(":selected").val() == "bulanan") {
+          tipeSelector.after(
+              "<div name=\"periode-selector\">" +
+              " <th>Bulan</th>" +
+              " <input class=\"form-control\" type=\"month\" name=\"bulan\" required>" +
+              "</div>"
+          );
+      }
+
+  });
+</script>
+</body>
+
+</html>
