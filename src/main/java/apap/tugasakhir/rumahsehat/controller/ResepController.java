@@ -21,10 +21,12 @@ import apap.tugasakhir.rumahsehat.model.AppointmentModel;
 import apap.tugasakhir.rumahsehat.model.JumlahObatResepModel;
 import apap.tugasakhir.rumahsehat.model.ObatModel;
 import apap.tugasakhir.rumahsehat.model.ResepModel;
+import apap.tugasakhir.rumahsehat.model.TagihanModel;
 import apap.tugasakhir.rumahsehat.service.ApotekerService;
 import apap.tugasakhir.rumahsehat.service.AppointmentService;
 import apap.tugasakhir.rumahsehat.service.ObatService;
 import apap.tugasakhir.rumahsehat.service.ResepService;
+import apap.tugasakhir.rumahsehat.service.TagihanService;
 import apap.tugasakhir.rumahsehat.service.UserService;
 
 @Controller
@@ -44,6 +46,9 @@ public class ResepController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TagihanService tagihanService;
 
 
     @GetMapping(value = "/add/{kode}")
@@ -151,7 +156,8 @@ public class ResepController {
             obatService.updateObat(obat);
         }
         String kodeAppointment = resep.getAppointment().getKode();
-        model.addAttribute("successmessage", appointmentService.updateAppointment(kodeAppointment));
+        tagihanService.addTagihanResep(new TagihanModel(), resep.getAppointment());
+        model.addAttribute("successmessage", "Resep berhasil dikonfirmasi!");
         model.addAttribute("resep", resep);
         model.addAttribute("listJumlah", resep.getListJumlahObatResep());
         model.addAttribute("role", role);
