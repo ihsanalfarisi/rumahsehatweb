@@ -4,6 +4,7 @@ import apap.tugasakhir.rumahsehat.model.AppointmentModel;
 import apap.tugasakhir.rumahsehat.model.DokterModel;
 import apap.tugasakhir.rumahsehat.model.PasienModel;
 import apap.tugasakhir.rumahsehat.service.AppointmentRestService;
+import apap.tugasakhir.rumahsehat.service.DokterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -19,10 +20,13 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/v1/appointment")
+@CrossOrigin
 public class AppointmentRestController {
 
     @Autowired
     private  AppointmentRestService appointmentRestService;
+    @Autowired
+    private DokterService dokterService;
 
     @PostMapping(value = "/add")
     private AppointmentModel createAppointment(@Valid @RequestBody Map<String,String> data, BindingResult bindingResult) {
@@ -50,7 +54,6 @@ public class AppointmentRestController {
         }
     }
 
-    @CrossOrigin
     @GetMapping(value = "/list-dokter")
     private List<DokterModel> retrieveListDokter(){
         return appointmentRestService.retrieveListDokter();
