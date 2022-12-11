@@ -60,7 +60,7 @@ public class ResepController {
         app.setResep(resep);
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
-        return "/form-add-resep";
+        return "form-add-resep";
     }
 
     @PostMapping(value = "/add/{kode}", params = { "save" })
@@ -92,7 +92,7 @@ public class ResepController {
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
         model.addAttribute("kode", kode);
-        return "/form-add-resep";
+        return "form-add-resep";
     }
 
     @PostMapping(value = "/add/{kode}", params = { "deleteRowObat" })
@@ -107,7 +107,7 @@ public class ResepController {
         model.addAttribute("resep", resep);
         model.addAttribute("kode", kode);
         model.addAttribute("listObat", listObat);
-        return "/form-add-resep";
+        return "form-add-resep";
     }
 
     @GetMapping("/view/{id}")
@@ -117,7 +117,7 @@ public class ResepController {
         model.addAttribute("resep", resep);
         model.addAttribute("listJumlah", resep.getListJumlahObatResep());
         model.addAttribute("role", role);
-        return "/view-resep";
+        return "view-resep";
     }
 
     @GetMapping("/viewall")
@@ -126,7 +126,7 @@ public class ResepController {
         String role = userService.getUserRole();
         model.addAttribute("role", role);
         model.addAttribute("listResep", listResep);
-        return "/viewall-resep";
+        return "viewall-resep";
     }
 
     @PostMapping(value="/view/{id}", params= {"konfirmasi"})
