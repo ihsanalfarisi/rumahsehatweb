@@ -30,11 +30,11 @@ build:
   stage: build
   script:
     - echo "Compiling the code..."
-    - cd $CI_PROJECT_DIR/belajarbelajar
+    - cd $CI_PROJECT_DIR/rumahsehat
     - sh gradlew clean assemble
   artifacts:
     paths:
-      - belajarbelajar/build/libs/belajarbelajar-0.0.1-SNAPSHOT.jar
+      - build/libs/rumahsehat-0.0.1-SNAPSHOT.jar
 
 #static-code-analysis:
 #  image: $IMAGE_OPENJDK_GRADLE
