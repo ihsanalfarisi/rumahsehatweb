@@ -5,6 +5,7 @@ import apap.tugasakhir.rumahsehat.model.ObatModel;
 import apap.tugasakhir.rumahsehat.model.ResepModel;
 import apap.tugasakhir.rumahsehat.service.BarchartService;
 import apap.tugasakhir.rumahsehat.service.ObatService;
+import apap.tugasakhir.rumahsehat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/barchart")
+@RequestMapping("/chart/bar")
 public class BarchartController {
     @Autowired
     private ObatService obatService;
@@ -26,12 +27,16 @@ public class BarchartController {
     @Autowired
     private BarchartService barchartService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping(value = "")
     public String homeChart( Model model) {
         ResepModel resep = new ResepModel();
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
+        model.addAttribute("role", userService.getUserRole());
         return "barchart-home";
     }
 
@@ -44,11 +49,13 @@ public class BarchartController {
         if(tipe.equals("penjualan")) {
             List<Integer> listData = barchartService.getKuantitasPejualan(listObat);
             redirectAttrs.addFlashAttribute("listData", listData);
-            return "redirect:/barchart/kuantitas-penjualan";
+            redirectAttrs.addFlashAttribute("role", userService.getUserRole());
+            return "redirect:/chart/bar/kuantitas-penjualan";
         } else {
             List<Integer> listData = barchartService.getTotalPendapatan(listObat);
             redirectAttrs.addFlashAttribute("listData", listData);
-            return "redirect:/barchart/total-pendapatan";
+            redirectAttrs.addFlashAttribute("role", userService.getUserRole());
+            return "redirect:/chart/bar/total-pendapatan";
         }
     }
 
@@ -66,6 +73,7 @@ public class BarchartController {
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
+        model.addAttribute("role", userService.getUserRole());
         return "barchart-home";
     }
 
@@ -80,6 +88,7 @@ public class BarchartController {
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
         model.addAttribute("listObat", listObat);
+        model.addAttribute("role", userService.getUserRole());
         return "barchart-home";
     }
 
