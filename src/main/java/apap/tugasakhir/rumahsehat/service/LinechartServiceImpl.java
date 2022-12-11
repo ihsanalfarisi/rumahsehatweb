@@ -105,4 +105,13 @@ public class LinechartServiceImpl implements LinechartService {
         }
         return listNama;
     }
+
+    @Override
+    public List<String> getAllNamaByListObat(List<ObatModel> listObat) {
+        List<String> listNama = new ArrayList<>();
+        for (ObatModel obat : listObat) {
+            listNama.add(obat.getNamaObat());
+        }
+        return listNama;
+    }
 }

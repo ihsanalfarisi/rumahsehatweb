@@ -61,7 +61,7 @@
   <div class="m-4">
     <h2 th:text="'Laporan Pendapatan ' + ${tahun}"></h2>
     <div class="d-flex justify-content-center">
-      <a th:href="@{/chart/line}" class="mx-2 btn btn-primary">Kembali</a>
+      <a th:href="@{/}" class="mx-2 btn btn-primary">Kembali</a>
     </div>
     <br/>
   </div>
@@ -70,6 +70,15 @@
 <div class="chartCard">
   <div class="chartBox">
     <canvas id="myChart"></canvas>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <div class="m-4">
+    <div class="d-flex justify-content-center">
+      <a th:href="@{/chart/bar}" class="mx-2 btn btn-primary">Bar Chart</a>
+      <a th:href="@{/chart/line}" class="mx-2 btn btn-primary">Line Chart</a>
+    </div>
+    <br/>
   </div>
 </div>
 

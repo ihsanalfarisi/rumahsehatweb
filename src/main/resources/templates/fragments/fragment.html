@@ -34,17 +34,9 @@
       </li>
       <li class="nav-item" th:if="${role == 'apoteker' || role == 'admin'}" th:classappend="${section} == 'obat' ? active : ''">
         <a class="nav-link" href="/obat">Obat</a>
+      </li><li class="nav-item" th:if="${role == 'admin'}" th:classappend="${section} == 'chart' ? active : ''">
+        <a class="nav-link" href="/chart">Chart Obat</a>
       </li>
-<!--      <li class="nav-item dropdown">-->
-<!--        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--          Dropdown link-->
-<!--        </a>-->
-<!--        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
-<!--          <a class="dropdown-item" href="#">Action</a>-->
-<!--          <a class="dropdown-item" href="#">Another action</a>-->
-<!--          <a class="dropdown-item" href="#">Something else here</a>-->
-<!--        </div>-->
-<!--      </li>-->
     </ul>
     <ul class="navbar-nav pull-right">
       <a class="nav-item nav-link text-text-secondary" th:href="@{/logout-sso}">Logout</a>

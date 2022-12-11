@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<nav th:replace="fragments/fragment :: navbar('resep')"></nav>
+<nav th:replace="fragments/fragment :: navbar('chart')"></nav>
 <div class="m-auto row justify-content-center text-danger font-weight-bold">
   <div th:text="${message}"></div>
 </div>
@@ -17,7 +17,7 @@
   <div class="card-body">
     <div class="justify-content-center">
       <h2>Tambah Data Line Chart</h2>
-      <form th:action="@{/linechart}" th:object="${resep}" method="POST">
+      <form th:action="@{/chart/line}" th:object="${resep}" method="POST">
         <th>Jenis Periode Line Chart</th>
         <select class="form-control" name="tipe">
           <option th:selected="${tipe == 'tahunan' || tipe == null}" th:value="tahunan">Laporan Tahunan</option>

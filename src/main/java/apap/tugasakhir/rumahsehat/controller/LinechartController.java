@@ -5,6 +5,7 @@ import apap.tugasakhir.rumahsehat.model.ObatModel;
 import apap.tugasakhir.rumahsehat.model.ResepModel;
 import apap.tugasakhir.rumahsehat.service.LinechartService;
 import apap.tugasakhir.rumahsehat.service.ObatService;
+import apap.tugasakhir.rumahsehat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +19,16 @@ import java.time.format.TextStyle;
 import java.util.*;
 
 @Controller
-@RequestMapping("/linechart")
+@RequestMapping("/chart/line")
 public class LinechartController {
     @Autowired
     private ObatService obatService;
 
     @Autowired
     private LinechartService linechartService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("")
     public String homeChart(Model model) {
@@ -35,6 +39,7 @@ public class LinechartController {
         model.addAttribute("listObat", listObat);
         model.addAttribute("maxYear", currentYear);
         model.addAttribute("tahun", currentYear);
+        model.addAttribute("role", userService.getUserRole());
         return "linechart-home";
     }
 
@@ -58,7 +63,8 @@ public class LinechartController {
             String strTahun = bulan.substring(0, 4);
             redirectAttrs.addFlashAttribute("bulan", namaBulan);
             redirectAttrs.addFlashAttribute("tahun", strTahun);
-            return "redirect:/linechart/pendapatan-bulanan";
+            redirectAttrs.addFlashAttribute("role", userService.getUserRole());
+            return "redirect:/chart/line/pendapatan-bulanan";
         } else {
             Map<String, List<Long>> mapDataPendapatanTahunan = new HashMap<>();
             for (JumlahObatResepModel obat : listObat) {
@@ -67,7 +73,8 @@ public class LinechartController {
             }
             redirectAttrs.addFlashAttribute("mapData", mapDataPendapatanTahunan);
             redirectAttrs.addFlashAttribute("tahun", tahun.toString());
-            return "redirect:/linechart/pendapatan-tahunan";
+            redirectAttrs.addFlashAttribute("role", userService.getUserRole());
+            return "redirect:/chart/line/pendapatan-tahunan";
         }
     }
 
@@ -93,6 +100,7 @@ public class LinechartController {
         model.addAttribute("tipe", tipe);
         model.addAttribute("bulan", bulan);
         model.addAttribute("tahun", tahun);
+        model.addAttribute("role", userService.getUserRole());
         return "linechart-home";
     }
 
@@ -113,6 +121,7 @@ public class LinechartController {
         model.addAttribute("tipe", tipe);
         model.addAttribute("bulan", bulan);
         model.addAttribute("tahun", tahun);
+        model.addAttribute("role", userService.getUserRole());
         return "linechart-home";
     }
 
