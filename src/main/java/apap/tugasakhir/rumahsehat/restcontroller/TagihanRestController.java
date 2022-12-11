@@ -20,18 +20,21 @@ public class TagihanRestController {
     @Autowired
     private TagihanRestService tagihanRestService;
 
+    @Autowired
+    private TagihanDb tagihanDb;
+
     @GetMapping(value = "/list-tagihan")
     private List<TagihanModel> retrieveListTagihan(
             Authentication authentication,
             @RequestParam("username") String username){
         return tagihanRestService.retrieveListTagihan(username);
-//        try {
-//            return tagihanRestService.retrieveListTagihan(username);
-//        } catch (NoSuchElementException e){
-//            throw new ResponseStatusException(
-//                    HttpStatus.NOT_FOUND, "Tagihan milik Pasien " + username + " tidak ditemukan"
-//            );
-//        }
+    }
+
+    @PostMapping(value = "/bayar")
+    private TagihanModel paidTagihan(Authentication authentication, @RequestParam("kode") String kode) {
+        TagihanModel tagihan = tagihanDb.findTagihanByKode(kode);
+        tagihanRestService.paidTagihan(tagihan);
+        return tagihan;
     }
 
 }

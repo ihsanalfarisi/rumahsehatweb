@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.HTML;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,13 @@ public class TagihanRestServiceImpl implements TagihanRestService {
         }
         System.out.println(listTagihan);
         return listTagihan;
+    }
+
+    @Override
+    public void paidTagihan(TagihanModel tagihan) {
+        tagihan.setIsPaid(true);
+        tagihan.setTanggalBayar(LocalDateTime.now());
+        tagihanDb.save(tagihan);
     }
 
 }
