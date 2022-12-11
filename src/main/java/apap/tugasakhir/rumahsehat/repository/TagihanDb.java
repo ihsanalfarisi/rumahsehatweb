@@ -12,6 +12,10 @@ import java.util.List;
 public interface TagihanDb extends JpaRepository<TagihanModel, String> {
     @Query("SELECT a FROM TagihanModel a WHERE a.appointment = :kode")
     TagihanModel findTagihanByAppointment(@Param("kode") String kode);
+
+    @Query("SELECT a FROM TagihanModel a WHERE a.kode = :kode")
+    TagihanModel findTagihanByKode(@Param("kode") String kode);
+
     @Query("SELECT t FROM TagihanModel t JOIN AppointmentModel a ON t.appointment.kode = a.kode" +
             " JOIN ResepModel r ON a.resep.id = r.id" +
             " JOIN JumlahObatResepModel jor ON jor.resep.id = r.id" +
