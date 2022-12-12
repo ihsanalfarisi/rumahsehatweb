@@ -42,7 +42,6 @@ public class AppointmentRestController {
         } else {
             log.info("Create appointment...");
             AppointmentModel appointment = new AppointmentModel();
-            System.out.println(data.get("idDokter"));
             DokterModel dokter = appointmentRestService.getDokter(data.get("idDokter"));
             PasienModel pasien = appointmentRestService.getPasien(data.get("usernamePasien"));
             appointment.setDokter(dokter);

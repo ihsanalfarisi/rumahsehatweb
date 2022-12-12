@@ -48,7 +48,8 @@ public class AppointmentRestServiceImpl implements AppointmentRestService {
         }
         for (AppointmentModel other : listOther) {
             if ((appointment.getWaktuAwal().isAfter(other.getWaktuAwal().minusHours(1)) && appointment.getWaktuAwal().isBefore(other.getWaktuAwal()))
-                    || (appointment.getWaktuAwal().isBefore(other.getWaktuAwal().plusHours(1)) && appointment.getWaktuAwal().isAfter(other.getWaktuAwal()))) {
+                    || (appointment.getWaktuAwal().isBefore(other.getWaktuAwal().plusHours(1)) && appointment.getWaktuAwal().isAfter(other.getWaktuAwal()))
+                    || appointment.getWaktuAwal() == other.getWaktuAwal()) {
                 status = false;
                 break;
             }
