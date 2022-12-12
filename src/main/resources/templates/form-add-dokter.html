@@ -16,19 +16,19 @@
                 <br>
                 <form th:action="@{/dokter/add}" th:object="${dokter}" method="POST">
                     <label>Username</label>
-                    <input type="text" name="username" class="form-control"/>
+                    <input required type="text" name="username" class="form-control"/>
 
                     <label>Nama</label>
-                    <input type="text" name="nama" class="form-control"/>
+                    <input required type="text" name="nama" class="form-control"/>
 
                     <label>E-mail</label>
-                    <input type="text" name="email" class="form-control"/>
+                    <input required type="text" name="email" class="form-control"/>
 
                     <label>Tarif</label>
-                    <input type="number" name="tarif" class="form-control"/>
+                    <input required type="number" name="tarif" class="form-control"/>
 
                     <label>Password</label>
-                    <input type="text" name="password" class="form-control" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" title="Password user mengandung angka, huruf besar, huruf kecil, dan simbol serta minimal memiliki 8 karakter"/>
+                    <input required type="text" name="password" class="form-control" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" title="Password user mengandung angka, huruf besar, huruf kecil, dan simbol serta minimal memiliki 8 karakter"/>
 
                     <br>
                     <button type="submit" class="btn btn-primary">Submit</button>
