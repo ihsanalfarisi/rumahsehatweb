@@ -43,17 +43,10 @@ public class TagihanRestController {
 
     @PostMapping(value = "/bayar")
     private TagihanModel paidTagihan(Authentication authentication, @RequestParam("kode") String kode) {
-        try {
-            log.info("Paid tagihan...");
-            TagihanModel tagihan = tagihanDb.findTagihanByKode(kode);
-            tagihanRestService.paidTagihan(tagihan);
-            return tagihan;
-        } catch (Exception e) {
-            log.error("Tagihan not found!");
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Tagihan not found!");
-        }
-
+        log.info("Paid tagihan...");
+        TagihanModel tagihan = tagihanDb.findTagihanByKode(kode);
+        tagihanRestService.paidTagihan(tagihan);
+        return tagihan;
     }
 
 }

@@ -56,17 +56,10 @@ public class PasienRestController {
 
     @PostMapping(value = "/bayar")
     private void paidTagihan(Authentication authentication, @RequestParam("kode") String kode) {
-        try {
-            log.info("Paid tagihan...");
-            TagihanModel tagihan = tagihanDb.findTagihanByKode(kode);
-            System.out.println(tagihan);
-            pasienRestService.paidTagihan(tagihan.getAppointment().getPasien(), tagihan);
-        } catch(Exception e) {
-            log.error("Tagihan not found!");
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Tagihan not found!");
-        }
-
+        log.info("Paid tagihan...");
+        TagihanModel tagihan = tagihanDb.findTagihanByKode(kode);
+        System.out.println(tagihan);
+        pasienRestService.paidTagihan(tagihan.getAppointment().getPasien(), tagihan);
     }
 
 }

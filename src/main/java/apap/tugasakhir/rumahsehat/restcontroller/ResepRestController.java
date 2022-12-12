@@ -27,6 +27,20 @@ public class ResepRestController {
     @Autowired
     ResepRestService resepRestService;
 
+    @GetMapping(value = "/{id}")
+    private ResepModel retrieveResep(
+            Authentication authentication,
+            @PathVariable("id") Long id) {
+        try {
+            log.info("Retrieve resep...");
+            return resepRestService.getResepById(id);
+        } catch (NoSuchElementException e) {
+            log.error("Resep not found!");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Resep " + id + " not found!");
+        }
+    }
+
     @GetMapping("/list-jumlah-obat/{idResep}")
     public List<JumlahObatResepModel> getJumlahObatResepByResepId(Authentication authentication,
             @PathVariable("idResep") Long idResep) {
