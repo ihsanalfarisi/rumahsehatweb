@@ -45,13 +45,19 @@ public class PasienRestController {
 
     @PostMapping(value = "/topup")
     private PasienModel topUpSaldo(@RequestParam("username") String username, @RequestBody Map<String,String> data){
-        log.info("Top up saldo...");
-        PasienModel pasien = pasienRestService.getPasienByUsername(username);
-        int saldo_awal = pasien.getSaldo();
-        int saldo_topup = Integer.parseInt(data.get("saldo"));
-        int saldo_akhir = saldo_awal + saldo_topup;
-        pasien.setSaldo(saldo_akhir);
-        return pasienRestService.updatePasien(pasien);
+        try {
+            log.info("Top up saldo...");
+            PasienModel pasien = pasienRestService.getPasienByUsername(username);
+            int saldo_awal = pasien.getSaldo();
+            int saldo_topup = Integer.parseInt(data.get("saldo"));
+            int saldo_akhir = saldo_awal + saldo_topup;
+            pasien.setSaldo(saldo_akhir);
+            return pasienRestService.updatePasien(pasien);
+        } catch (Exception e ) {
+            log.error("Top up melebihi batas!");
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Top up melebihi batas!");
+        }
     }
 
     @PostMapping(value = "/bayar")
