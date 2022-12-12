@@ -14,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +24,9 @@ import java.util.ArrayList;
 @CrossOrigin
 @RequestMapping("/api/v1/auth")
 public class JWTAuthController {
+
+    Logger log = LoggerFactory.getLogger(JWTAuthController.class);
+
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -33,6 +38,7 @@ public class JWTAuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JWTRequest request) throws Exception {
+        log.info("Create authentication token...");
         authenticate(request.getUsername(), request.getPassword());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         final String token = jwtUtility.generateToken(userDetails);
@@ -41,6 +47,7 @@ public class JWTAuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody PasienModel pasienBaru) throws Exception {
+        log.info("Register pasien...");
         pasienBaru.setRole("pasien");
         pasienBaru.setSaldo(0);
         pasienBaru.setAppointment(new ArrayList<>());
@@ -58,16 +65,14 @@ public class JWTAuthController {
     }
     private void authenticate(String username, String password) throws Exception {
         try {
+            log.info("Authenticate user...");
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
+            log.error("User disabled!");
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
+            log.error("Invalid credential!");
             throw new Exception("INVALID_CREDENTIALS", e);
         }
-    }
-
-    @GetMapping("")
-    public String helloWorld() {
-        return "Hello World";
     }
 }
