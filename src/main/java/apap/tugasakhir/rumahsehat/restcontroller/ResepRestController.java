@@ -4,6 +4,8 @@ import apap.tugasakhir.rumahsehat.model.AppointmentModel;
 import apap.tugasakhir.rumahsehat.model.JumlahObatResepModel;
 import apap.tugasakhir.rumahsehat.model.ResepModel;
 import apap.tugasakhir.rumahsehat.service.ResepRestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -19,6 +21,9 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/v1/resep")
 public class ResepRestController {
+
+    Logger log = LoggerFactory.getLogger(ResepRestController.class);
+
     @Autowired
     ResepRestService resepRestService;
 
@@ -27,16 +32,25 @@ public class ResepRestController {
             Authentication authentication,
             @PathVariable("id") Long id) {
         try {
+            log.info("Retrieve resep...");
             return resepRestService.getResepById(id);
         } catch (NoSuchElementException e) {
+            log.error("Resep not found!");
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Resep " + id + " not found");
+                    HttpStatus.NOT_FOUND, "Resep " + id + " not found!");
         }
     }
 
     @GetMapping("/list-jumlah-obat/{idResep}")
     public List<JumlahObatResepModel> getJumlahObatResepByResepId(Authentication authentication,
             @PathVariable("idResep") Long idResep) {
-        return resepRestService.getAllJumlahObatResepById(idResep);
+        try {
+            log.info("Retrieve list obat from resep...");
+            return resepRestService.getAllJumlahObatResepById(idResep);
+        } catch (Exception e) {
+            log.error("List obat resep from resep not found!");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "List obat resep not found!");
+        }
     }
 }
