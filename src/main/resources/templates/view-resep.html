@@ -16,11 +16,11 @@
                     <h2>Detail Resep</h2>
                     <br>
                     <p th:text="'ID Resep: ' + ${resep.id}"></p>
-                    <p th:text="'Nama Dokter: ' + ${resep.appointment.dokter.nama}"></p>
-                    <p th:text="'Nama Pasien: ' + ${resep.appointment.pasien.nama}"></p>
+                    <p th:text="'Dokter: ' + ${resep.appointment.dokter.nama}"></p>
+                    <p th:text="'Pasien: ' + ${resep.appointment.pasien.nama}"></p>
                     <div th:if="*{resep.isDone}">
-                        <p>Status Resep: Selesai</p>
                         <p th:text="'Apoteker: ' + *{resep.apoteker.nama}"></p>
+                        <p>Status Resep: Selesai</p>
                     </div>
                     <div th:unless="*{resep.isDone}">
                         <p>Status Resep: Belum Selesai</p>
@@ -28,7 +28,8 @@
 
                     <div th:if="*{listJumlah.size() != 0}">
                         <p th:text="'Jumlah Obat: ' + ${listJumlah.size}"></p>
-                        <p th:text="'Daftar Obat: ' "></p>
+                        <br>
+                        <b><p th:text="'Daftar Obat: ' "></p></b>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -57,8 +58,8 @@
                     </div>
                     <br>
 
-                    <a th:if="${role == 'apoteker'}"class="btn btn-primary" href="/resep/viewall">Kembali</a>
-                    <a th:if="${role == 'dokter'}" class="btn btn-primary" th:href="@{/appointment/view/} + ${resep.getAppointment().getKode()}">Kembali</a>
+                    <a th:if="${role == 'apoteker'}"class="btn btn-outline-secondary" href="/resep/viewall">Kembali</a>
+                    <a th:if="${role == 'dokter'}" class="btn btn-outline-secondary" th:href="@{/appointment/view/} + ${resep.getAppointment().getKode()}">Kembali</a>
 
             </div>
             </div>

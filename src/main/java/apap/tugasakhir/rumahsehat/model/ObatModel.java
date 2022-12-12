@@ -35,6 +35,7 @@ public class ObatModel {
     private Integer harga;
 
     @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<JumlahObatResepModel> listJumlahObatResep;
 
 }
