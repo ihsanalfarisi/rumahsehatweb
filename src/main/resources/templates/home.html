@@ -19,7 +19,7 @@
     <a th:if="${role == 'admin' || role == 'dokter'}" href="/appointment/viewall" class="btn btn-success btn-lg btn-block">Appointments</a>
     <a th:if="${role == 'admin' || role == 'apoteker'}" href="/resep/viewall" class="btn btn-success btn-lg btn-block">Resep</a>
     <a th:if="${role == 'admin' || role == 'apoteker'}" href="/obat" class="btn btn-success btn-lg btn-block">Obat</a>
-    <a th:if="${role == 'admin'}" href="/obat" class="btn btn-success btn-lg btn-block">Chart Obat</a>
+    <a th:if="${role == 'admin'}" href="/chart" class="btn btn-success btn-lg btn-block">Chart Obat</a>
   </div>
 </body>
 </html>
