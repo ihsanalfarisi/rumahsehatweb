@@ -34,7 +34,6 @@ public class ObatController {
     @GetMapping("/update/{idObat}")
     public String updateObatForm(@PathVariable String idObat, Model model){
         ObatModel obat = obatService.getObatById(idObat);
-
         if (obat == null){
             model.addAttribute("idObat", idObat);
             return "error-not-found";
