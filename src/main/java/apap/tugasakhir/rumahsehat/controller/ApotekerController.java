@@ -1,7 +1,6 @@
 package apap.tugasakhir.rumahsehat.controller;
 
 import apap.tugasakhir.rumahsehat.model.ApotekerModel;
-import apap.tugasakhir.rumahsehat.model.DokterModel;
 import apap.tugasakhir.rumahsehat.service.ApotekerService;
 import apap.tugasakhir.rumahsehat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
