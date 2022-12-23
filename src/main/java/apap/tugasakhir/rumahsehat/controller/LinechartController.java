@@ -113,8 +113,7 @@ public class LinechartController {
         if (resep.getListJumlahObatResep() == null || resep.getListJumlahObatResep().size() == 0) {
             resep.setListJumlahObatResep(new ArrayList<>());
         }
-//        final Integer rowId = Integer.valueOf(row);
-//        resep.getListJumlahObatResep().remove(rowId.intValue());
+
         resep.getListJumlahObatResep().remove(row.intValue());
         List<ObatModel> listObat = obatService.getListObat();
         model.addAttribute("resep", resep);
